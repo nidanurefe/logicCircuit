@@ -11,16 +11,13 @@ void Circuit::addWire(Wire* wire){
 
 
 void Circuit::simulate(){
-    for(Component* comp : components){
-        comp.evaluate()
-    }
-
-    for(Wire* w : wires){
-        w->propagateSignal();
+    for (Component* c : components) {
+        for (Wire* w : wires) {
+            w->propagateSignal();
+        }
+        c->evaluate();
     }
 }
-
-
 
 
 
@@ -28,8 +25,10 @@ Circuit::~Circuit(){
     for(Component* comp : components){
         delete comp;
     }
+    components.clear();
 
     for(Wire* wire : wires){
         delete wire;
     }
+    wires.clear();
 }
